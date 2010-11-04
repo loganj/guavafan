@@ -2,6 +2,7 @@ package com.github.loganj.guavafan;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
 import java.util.Collections;
@@ -36,4 +37,8 @@ abstract class AbstractPimpedIterable<T> implements PimpedIterable<T> {
         return pimpIterable(Iterables.concat(this.map(f)));
     }
 
+    @Override
+    public PimpedIterable<T> force() {
+        return pimpIterable(ImmutableList.copyOf(this));
+    }
 }

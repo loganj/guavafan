@@ -15,4 +15,6 @@ public interface PimpedIterable<T> extends Iterable<T> {
 
     <S> PimpedIterable<S> flatMap(Function<? super T, ? extends Iterable<S>> f);
 
+    PimpedIterable<T> force();
+
 }
