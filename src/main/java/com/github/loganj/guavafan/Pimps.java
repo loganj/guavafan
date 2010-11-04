@@ -2,11 +2,19 @@ package com.github.loganj.guavafan;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
+import com.google.common.base.Predicate;
 
 import java.util.Iterator;
 
 public abstract class Pimps {
     private Pimps() {}
+
+    public static <T> PimpedPredicate<T> pimpPredicate(Predicate<T> p) {
+        if ( p instanceof PimpedPredicate ) {
+            return (PimpedPredicate<T>)p;
+        }
+        return new BasicPimpedPredicate<T>(p);
+    }
 
     public static <F,T> PimpedFunction<F,T> pimpFunction(Function<F,T> f) {
         if ( f instanceof PimpedFunction ) {
@@ -52,6 +60,18 @@ public abstract class Pimps {
         @Override
         public <B> PimpedFunction<F, B> andThen(Function<? super T, B> f) {
             return pimpFunction(Functions.compose(f, this));
+        }
+    }
+
+    final private static class BasicPimpedPredicate<T> extends AbstractPimpedPredicate<T> {
+        final private Predicate<T> p;
+        BasicPimpedPredicate(Predicate<T> p) {
+            this.p = p;
+        }
+
+        @Override
+        public boolean apply(T t) {
+            return p.apply(t);
         }
     }
 }
