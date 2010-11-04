@@ -13,6 +13,6 @@ public interface PimpedIterable<T> extends Iterable<T> {
 
     <D> PimpedIterable<D> through(Function<? super Iterable<T>, ? extends Iterable<D>> pipeline);
 
-    <S> PimpedIterable<S> flatMap(Function<? super T, ? extends PimpedIterable<S>> f);
+    <S> PimpedIterable<S> flatMap(Function<? super T, ? extends Iterable<S>> f);
 
 }

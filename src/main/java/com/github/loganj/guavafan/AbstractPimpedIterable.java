@@ -32,11 +32,8 @@ abstract class AbstractPimpedIterable<T> implements PimpedIterable<T> {
     }
 
     @Override
-    public <S> PimpedIterable<S> flatMap(Function<? super T, ? extends PimpedIterable<S>> f) {
-        for ( T t : this ) {
-            return f.apply(t);
-        }
-        return pimpIterable(Collections.<S>emptySet());
+    public <S> PimpedIterable<S> flatMap(Function<? super T, ? extends Iterable<S>> f) {
+        return pimpIterable(Iterables.concat(this.map(f)));
     }
 
 }
